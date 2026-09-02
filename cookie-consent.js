@@ -111,15 +111,15 @@ document.addEventListener("DOMContentLoaded", function() {
     waStyle.innerHTML = `
         #wa-floating-btn {
             position: fixed;
-            bottom: ${bannerVisible ? '120px' : '24px'};
-            right: 24px;
-            width: 60px;
-            height: 60px;
+            bottom: ${bannerVisible ? '160px' : '30px'};
+            right: 30px;
+            width: 78px;
+            height: 78px;
             background-color: #25D366;
             color: #FFF;
             border-radius: 50%;
             text-align: center;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+            box-shadow: 2px 2px 15px rgba(0,0,0,0.3);
             z-index: 9998;
             display: flex;
             align-items: center;
@@ -131,20 +131,20 @@ document.addEventListener("DOMContentLoaded", function() {
             transform: scale(1.1);
         }
         #wa-floating-btn svg {
-            width: 34px;
-            height: 34px;
+            width: 46px;
+            height: 46px;
             fill: currentColor;
         }
         @media (max-width: 768px) {
             #wa-floating-btn {
-                bottom: ${bannerVisible ? '170px' : '24px'};
-                right: 16px;
-                width: 50px;
-                height: 50px;
+                bottom: ${bannerVisible ? '220px' : '30px'};
+                right: 20px;
+                width: 65px;
+                height: 65px;
             }
             #wa-floating-btn svg {
-                width: 28px;
-                height: 28px;
+                width: 38px;
+                height: 38px;
             }
         }
     `;
@@ -169,13 +169,13 @@ document.addEventListener("DOMContentLoaded", function() {
         document.getElementById("cookie-accept").addEventListener("click", function() {
             localStorage.setItem("cookieConsent", "accepted");
             document.getElementById("cookie-banner").style.display = "none";
-            document.getElementById("wa-floating-btn").style.bottom = "24px";
+            document.getElementById("wa-floating-btn").style.bottom = "30px";
         });
 
         document.getElementById("cookie-reject").addEventListener("click", function() {
             localStorage.setItem("cookieConsent", "rejected");
             document.getElementById("cookie-banner").style.display = "none";
-            document.getElementById("wa-floating-btn").style.bottom = "24px";
+            document.getElementById("wa-floating-btn").style.bottom = "30px";
         });
     }
 });
