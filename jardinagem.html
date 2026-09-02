@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ResultSpeed para Jardinagem — Mais orçamento, menos curtida</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0C0D10;
+    --paper:#F2F0EA;
+    --paper-line:#DAD6CC;
+    --text-dark:#14161A;
+    --text-muted:#6B6F76;
+    --text-on-ink:#F2F0EA;
+    --text-on-ink-muted:#9A9DA6;
+    --signal:#FF4B2B;
+    --signal-dim:#8C2A18;
+    --leaf:#4C7A3F;
+    --leaf-dim:#2E4A26;
+
+    --display: "Bricolage Grotesque", sans-serif;
+    --body: "IBM Plex Sans", sans-serif;
+    --mono: "IBM Plex Mono", monospace;
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--text-dark);
+    font-family:var(--body);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{ color:inherit; }
+  ::selection{ background:var(--leaf); color:var(--paper); }
+
+  a:focus-visible,
+  button:focus-visible{
+    outline:2px solid var(--leaf);
+    outline-offset:3px;
+  }
+
+  .wrap{ max-width:1180px; margin:0 auto; padding:0 32px; }
+
+  h1,h2,h3{
+    font-family:var(--display);
+    margin:0;
+    letter-spacing:-0.01em;
+  }
+  p{ margin:0; }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:13px;
+    color:var(--text-muted);
+  }
+  .on-ink .eyebrow{ color:var(--text-on-ink-muted); }
+
+  /* ---------- Nav ---------- */
+  header{
+    background:var(--paper);
+    position:sticky;
+    top:0;
+    z-index:20;
+    border-bottom:1px solid var(--paper-line);
+  }
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:20px 32px;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .brand-block{
+    display:flex;
+    align-items:baseline;
+  }
+  .wordmark{
+    font-family:var(--display);
+    font-weight:700;
+    font-size:20px;
+    letter-spacing:-0.02em;
+    text-decoration:none;
+    color:var(--text-dark);
+  }
+  .wordmark span{ color:var(--leaf); }
+  .brand-tag{
+    margin-left:12px;
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--text-muted);
+    padding-left:12px;
+    border-left:1px solid var(--paper-line);
+  }
+  .nav-cta{
+    display:inline-block;
+    background:var(--ink);
+    color:var(--paper);
+    text-decoration:none;
+    font-size:14px;
+    padding:10px 18px;
+    border-radius:2px;
+    transition:background .15s ease;
+  }
+  .nav-cta:hover{ background:var(--leaf); color:var(--paper); }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    background:var(--ink);
+    color:var(--text-on-ink);
+    padding:100px 0 88px;
+  }
+  .hero .wrap{
+    display:grid;
+    grid-template-columns:1.35fr 1fr;
+    gap:60px;
+    align-items:end;
+  }
+  .hero-headline{
+    font-size:clamp(38px, 5vw, 68px);
+    font-weight:700;
+    line-height:1.05;
+    max-width:15ch;
+  }
+  .hero-headline .accent{ color:var(--leaf); }
+  .hero-sub{
+    margin-top:26px;
+    max-width:48ch;
+    font-size:17px;
+    color:var(--text-on-ink-muted);
+  }
+  .hero-actions{
+    margin-top:36px;
+    display:flex;
+    flex-wrap:wrap;
+  }
+  .hero-actions a{ margin:0 16px 16px 0; }
+  .btn-primary{
+    background:var(--leaf);
+    color:var(--ink);
+    text-decoration:none;
+    font-weight:600;
+    font-size:15px;
+    padding:14px 24px;
+    border-radius:2px;
+    border:1px solid var(--leaf);
+    transition:opacity .15s ease;
+  }
+  .btn-primary:hover{ opacity:.88; }
+  .btn-ghost{
+    color:var(--text-on-ink);
+    text-decoration:none;
+    font-size:15px;
+    padding:14px 22px;
+    border:1px solid #35373f;
+    border-radius:2px;
+    transition:border-color .15s ease;
+  }
+  .btn-ghost:hover{ border-color:var(--text-on-ink); }
+
+  .hero-metric{ border-top:1px solid #2A2C33; padding-top:20px; }
+  .hero-metric-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    padding:16px 0;
+    border-bottom:1px solid #2A2C33;
+  }
+  .hero-metric-row:last-child{ border-bottom:none; }
+  .hero-metric-num{ font-family:var(--mono); font-size:26px; color:var(--paper); }
+  .hero-metric-label{
+    font-size:13px;
+    color:var(--text-on-ink-muted);
+    max-width:17ch;
+    text-align:right;
+  }
+
+  /* ---------- Section shell ---------- */
+  section{ padding:92px 0; }
+  .section-head{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:40px;
+    margin-bottom:52px;
+    align-items:end;
+  }
+  .section-head h2{
+    font-size:clamp(27px,3.2vw,40px);
+    font-weight:700;
+    line-height:1.12;
+  }
+  .section-head p{ color:var(--text-muted); font-size:16px; max-width:42ch; }
+
+  /* ---------- Diferença do setor ---------- */
+  .pain{ border-top:1px solid var(--paper-line); }
+  .pain-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:1px;
+    background:var(--paper-line);
+    border:1px solid var(--paper-line);
+  }
+  .pain-card{
+    background:var(--paper);
+    padding:32px;
+  }
+  .pain-card h3{ font-size:18px; font-weight:600; }
+  .pain-card p{ margin-top:12px; color:var(--text-muted); font-size:14.5px; }
+
+  /* ---------- Serviços ---------- */
+  .services{ border-top:1px solid var(--paper-line); }
+  .service-row{
+    display:grid;
+    grid-template-columns:1.1fr 2fr 0.7fr;
+    gap:32px;
+    padding:30px 0;
+    border-bottom:1px solid var(--paper-line);
+    align-items:baseline;
+  }
+  .service-row h3{ font-size:22px; font-weight:600; }
+  .service-row p{ color:var(--text-muted); max-width:52ch; }
+  .service-tag{
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--leaf-dim);
+    text-align:right;
+    white-space:nowrap;
+  }
+
+  /* ---------- Processo ---------- */
+  .process{ background:var(--ink); color:var(--text-on-ink); }
+  .process-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:1px;
+    background:#24262c;
+    border:1px solid #24262c;
+  }
+  .process-step{ background:var(--ink); padding:34px 26px 40px; }
+  .process-num{ font-family:var(--mono); color:var(--leaf); font-size:14px; }
+  .process-step h3{ margin-top:18px; font-size:18px; font-weight:600; }
+  .process-step p{ margin-top:12px; font-size:14px; color:var(--text-on-ink-muted); }
+
+  /* ---------- Resultados ---------- */
+  .results-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:48px; }
+  .result-card{ border-top:2px solid var(--ink); padding-top:20px; }
+  .result-num{ font-family:var(--mono); font-size:clamp(34px,4vw,50px); color:var(--ink); }
+  .result-num em{ color:var(--leaf); font-style:normal; }
+  .result-label{ margin-top:10px; font-size:14.5px; color:var(--text-muted); max-width:30ch; }
+
+  /* ---------- Depoimento ---------- */
+  .quote-section{ border-top:1px solid var(--paper-line); border-bottom:1px solid var(--paper-line); }
+  blockquote{
+    margin:0;
+    font-family:var(--display);
+    font-weight:500;
+    font-size:clamp(23px,2.8vw,32px);
+    line-height:1.35;
+    max-width:27ch;
+  }
+  .quote-attr{ margin-top:26px; display:flex; align-items:center; font-size:14.5px; color:var(--text-muted); }
+  .quote-attr strong{ color:var(--text-dark); margin-right:14px; }
+
+  /* ---------- CTA ---------- */
+  .cta{ background:var(--ink); color:var(--text-on-ink); text-align:center; }
+  .cta .wrap{ max-width:720px; display:flex; flex-direction:column; align-items:center; }
+  .cta h2{ font-size:clamp(29px,3.8vw,46px); font-weight:700; line-height:1.1; max-width:17ch; }
+  .cta-sub{ margin-top:20px; color:var(--text-on-ink-muted); max-width:42ch; font-size:16px; }
+  .cta-contact-row{ margin-top:36px; display:flex; flex-wrap:wrap; justify-content:center; }
+  .cta-contact-row a{ margin:0 8px 16px 8px; }
+  .cta-location{ margin-top:24px; font-family:var(--mono); font-size:13px; color:var(--text-on-ink-muted); }
+
+  /* ---------- Footer ---------- */
+  footer{ background:var(--ink); border-top:1px solid #24262c; padding:32px 0; }
+  .foot-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:var(--text-on-ink-muted);
+    font-size:13px;
+  }
+  .foot-links{ display:flex; list-style:none; padding:0; margin:0; }
+  .foot-links li:not(:last-child){ margin-right:24px; }
+  .foot-links a{ text-decoration:none; color:var(--text-on-ink-muted); }
+  .foot-links a:hover{ color:var(--paper); }
+  .foot-legal{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:20px;
+    padding-top:20px;
+    border-top:1px solid #24262c;
+    color:#585A62;
+    font-size:12px;
+  }
+  .foot-legal .foot-links a{ color:#585A62; }
+  .foot-legal .foot-links a:hover{ color:var(--paper); }
+  .foot-legal .foot-links li:not(:last-child){ margin-right:20px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 860px){
+    .brand-tag{ display:none; }
+    .hero .wrap{ grid-template-columns:1fr; }
+    .hero{ padding:76px 0 56px; }
+    .hero-metric{ margin-top:20px; }
+    .section-head{ grid-template-columns:1fr; }
+    .pain-grid{ grid-template-columns:1fr; }
+    .service-row{ grid-template-columns:1fr; gap:8px; }
+    .service-tag{ text-align:left; }
+    .process-grid{ grid-template-columns:1fr; }
+    .results-grid{ grid-template-columns:1fr; gap:32px; }
+    .foot-row{ flex-direction:column; gap:14px; align-items:flex-start; }
+    .foot-legal{ flex-direction:column; align-items:flex-start; gap:10px; }
+    .wrap{ padding:0 22px; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+  }
+</style>
+</head>
+<body>
+
+  <header>
+    <nav>
+      <div class="brand-block">
+        <a href="index.html" class="wordmark">Result<span>Speed</span></a>
+        <span class="brand-tag">para empresas de jardinagem</span>
+      </div>
+      <a href="#contato" class="nav-cta">Falar no WhatsApp</a>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <div>
+          <p class="eyebrow on-ink">Marketing para paisagismo, jardinagem e manutenção de áreas verdes</p>
+          <h1 class="hero-headline">
+            Sua agenda cheia de orçamento, <span class="accent">não de curtida</span>.
+          </h1>
+          <p class="hero-sub">
+            Ajudamos empresas de jardinagem e paisagismo a aparecer no Google e no mapa na hora em que o cliente procura, e a transformar esse contato em orçamento fechado — com anúncio local, portfólio de antes e depois e atendimento rápido no WhatsApp.
+          </p>
+          <div class="hero-actions">
+            <a href="#contato" class="btn-primary">Quero mais orçamentos</a>
+            <a href="#resultados" class="btn-ghost">Ver resultados do setor</a>
+          </div>
+        </div>
+        <div class="hero-metric on-ink">
+          <div class="hero-metric-row">
+            <span class="hero-metric-num">+64%</span>
+            <span class="hero-metric-label">de ligações e mensagens vindas do Google Meu Negócio</span>
+          </div>
+          <div class="hero-metric-row">
+            <span class="hero-metric-num">18d</span>
+            <span class="hero-metric-label">para o primeiro lote de orçamentos qualificados chegando</span>
+          </div>
+          <div class="hero-metric-row">
+            <span class="hero-metric-num">-27%</span>
+            <span class="hero-metric-label">no custo por orçamento recebido via anúncio local</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- POR QUE É DIFERENTE -->
+    <section class="pain">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Jardinagem não vende como e-commerce</h2>
+          <p>A decisão de contratar depende de confiança visual, proximidade e resposta rápida — não de um anúncio genérico copiado de outro nicho.</p>
+        </div>
+        <div class="pain-grid">
+          <div class="pain-card">
+            <h3>Demanda sazonal</h3>
+            <p>Poda, paisagismo e manutenção têm picos por época do ano. A verba de mídia precisa acompanhar esse calendário, não ficar fixa o ano inteiro.</p>
+          </div>
+          <div class="pain-card">
+            <h3>Decisão pelo visual</h3>
+            <p>Cliente contrata depois de ver fotos de antes e depois, não depois de ler um texto institucional. O criativo precisa mostrar resultado real.</p>
+          </div>
+          <div class="pain-card">
+            <h3>Raio de atendimento</h3>
+            <p>Anúncio disparado para o país inteiro gera contato de gente fora da área. A segmentação por bairro e cidade evita desperdício de verba.</p>
+          </div>
+          <div class="pain-card">
+            <h3>Concorrência informal</h3>
+            <p>Boa parte da concorrência é autônomo sem presença digital. Estar bem posicionado no Google e no mapa já é uma vantagem competitiva grande.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section id="servicos" class="services">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>O que fazemos pela sua empresa</h2>
+          <p>Um pacote pensado para quem vive de indicação e visual, não de tráfego genérico.</p>
+        </div>
+
+        <div class="service-row">
+          <h3>Google Meu Negócio e Mapas</h3>
+          <p>Otimização do perfil, fotos, categorias e avaliações para aparecer nas primeiras posições quando alguém busca "jardinagem perto de mim".</p>
+          <span class="service-tag">Visibilidade local</span>
+        </div>
+        <div class="service-row">
+          <h3>Anúncios por raio de atendimento</h3>
+          <p>Campanhas no Google e no Meta segmentadas por bairro e cidade, para gastar verba só onde você realmente atende.</p>
+          <span class="service-tag">Aquisição</span>
+        </div>
+        <div class="service-row">
+          <h3>WhatsApp para orçamento rápido</h3>
+          <p>Fluxo de resposta automática e roteiro de atendimento para não perder cliente por demora em responder.</p>
+          <span class="service-tag">Conversão</span>
+        </div>
+        <div class="service-row">
+          <h3>Portfólio de antes e depois</h3>
+          <p>Produção de fotos e vídeos curtos dos seus próprios serviços, organizados em Reels e posts que geram confiança.</p>
+          <span class="service-tag">Prova social</span>
+        </div>
+        <div class="service-row">
+          <h3>Gestão de avaliações</h3>
+          <p>Processo simples para pedir e responder avaliações no Google, aumentando a nota e a credibilidade do seu perfil.</p>
+          <span class="service-tag">Reputação</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESSO -->
+    <section id="processo" class="process">
+      <div class="wrap">
+        <div class="section-head">
+          <h2 style="color:var(--paper);">Como colocamos isso em prática</h2>
+          <p style="color:var(--text-on-ink-muted);">Um ciclo mensal, ajustado ao calendário de alta e baixa temporada do seu serviço.</p>
+        </div>
+        <div class="process-grid">
+          <div class="process-step">
+            <span class="process-num">01</span>
+            <h3>Mapeamento da área</h3>
+            <p>Definimos os bairros e cidades onde vale a pena anunciar, com base no seu raio real de atendimento.</p>
+          </div>
+          <div class="process-step">
+            <span class="process-num">02</span>
+            <h3>Perfil e portfólio</h3>
+            <p>Ajustamos Google Meu Negócio e organizamos fotos de antes e depois dos seus próprios trabalhos.</p>
+          </div>
+          <div class="process-step">
+            <span class="process-num">03</span>
+            <h3>Campanhas no ar</h3>
+            <p>Anúncios locais no Google e no Meta, com orçamento ajustado à sazonalidade do seu serviço.</p>
+          </div>
+          <div class="process-step">
+            <span class="process-num">04</span>
+            <h3>Acompanhamento mensal</h3>
+            <p>Relatório simples: quantos orçamentos chegaram, de onde vieram e quanto custou cada um.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESULTADOS -->
+    <section id="resultados" class="results">
+      <div class="wrap">
+        <div class="section-head">
+          <h2>Números de empresas do setor que atendemos</h2>
+          <p>Médias consolidadas de contas de jardinagem e paisagismo ativas nos últimos 90 dias.</p>
+        </div>
+        <div class="results-grid">
+          <div class="result-card">
+            <div class="result-num">+<em>64%</em></div>
+            <p class="result-label">de aumento em chamadas e mensagens pelo Google Meu Negócio</p>
+          </div>
+          <div class="result-card">
+            <div class="result-num">-<em>27%</em></div>
+            <p class="result-label">de redução no custo médio por orçamento recebido</p>
+          </div>
+          <div class="result-card">
+            <div class="result-num">3.1<em>x</em></div>
+            <p class="result-label">mais orçamentos solicitados no mesmo período do ano anterior</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEPOIMENTO -->
+    <section class="quote-section">
+      <div class="wrap">
+        <blockquote>
+          "Antes eu dependia só de indicação de cliente antigo. Hoje o telefone toca com gente nova toda semana, já sabendo o que quer."
+        </blockquote>
+        <div class="quote-attr">
+          <strong>Eduardo Ramos</strong>
+          <span>— Sócio, Ramos Paisagismo</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="contato" class="cta">
+      <div class="wrap">
+        <h2>Vamos encher sua agenda de orçamento?</h2>
+        <p class="cta-sub">Fale agora com um estrategista pelo telefone ou WhatsApp e receba um diagnóstico gratuito da presença da sua empresa no Google.</p>
+        <div class="cta-contact-row">
+          <a href="https://wa.me/5541996203188" class="btn-primary" target="_blank" rel="noopener">Chamar no WhatsApp</a>
+          <a href="tel:+5541996203188" class="btn-ghost">(41) 99620-3188</a>
+        </div>
+        <p class="cta-location">Curitiba, PR — atendimento em todo o Brasil</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap foot-row">
+      <span>© 2026 ResultSpeed. Todos os direitos reservados.</span>
+      <ul class="foot-links">
+        <li><a href="index.html">Site principal</a></li>
+        <li><a href="#servicos">Serviços</a></li>
+        <li><a href="#contato">Contato</a></li>
+      </ul>
+    </div>
+    <div class="wrap foot-legal">
+      <p>ResultSpeed Marketing Digital LTDA — CNPJ 46.494.236/0001-22 — Curitiba, PR, Brasil</p>
+      <ul class="foot-links">
+        <li><a href="privacidade.html">Política de Privacidade</a></li>
+        <li><a href="termos.html">Termos de Uso</a></li>
+      </ul>
+    </div>
+  </footer>
+
+</body>
+</html>
